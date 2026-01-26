@@ -10,11 +10,19 @@
 </head>
 <body>
   <h1>🐍 Snake PWA</h1>
-  <canvas id="game" width="300" height="300"></canvas>
+  <canvas id="game" width="400" height="400" class="background"></canvas>
   <p>Puntaje: <span id="score">0</span></p>
 
-  <script src="game.js"></script>
 
+
+  <div class="game_buttons">
+  <button id="up">⬆</button>
+  <button id="left">⬅</button>
+  <button id="down">⬇</button>
+  <button id="right">➡</button>
+</div>
+
+  <script src="game.js"></script>
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('service-worker.js');
