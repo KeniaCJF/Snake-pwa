@@ -21,7 +21,7 @@ function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   // Dibujar comida
-ctx.drawImage(carrotImg, food.x, food.y, 30, 30);
+ctx.drawImage(carrotImg, food.x, food.y, 20, 20);
 
   // Dibujar serpiente
 snake.forEach(part => {
