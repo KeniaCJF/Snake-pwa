@@ -1,106 +1,100 @@
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 const scoreEl = document.getElementById("score");
+
 const carrotImg = new Image();
 carrotImg.src = "images/Carrot.png";
 const bunnyImg = new Image();
 bunnyImg.src = "images/Bunny.png";
 
+const STEP = 10;
+const SIZE = 30;
 
 let snake = [{ x: 150, y: 150 }];
 let food = { x: 60, y: 60 };
-let dx = 10;
+let dx = STEP;
 let dy = 0;
 let score = 0;
 
-function changeDirection(x,y){
-dx = x;
-dy = y;
+function changeDirection(x, y) {
+  dx = x;
+  dy = y;
 }
-function drawBounds() {
-  ctx.strokeStyle = "black";
-  ctx.lineWidth = 2;
-  ctx.strokeRect(0, 0, canvas.width - 30, canvas.height - 30);
+
+function spawnFood() {
+  food = {
+    x: Math.floor(Math.random() * (canvas.width / STEP)) * STEP,
+    y: Math.floor(Math.random() * (canvas.height / STEP)) * STEP
+  };
+
+  // asegurar que quede completamente visible
+  food.x = Math.min(food.x, canvas.width - SIZE);
+  food.y = Math.min(food.y, canvas.height - SIZE);
 }
 
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-
-  // Mover serpiente
-  const head = { x: snake[0].x + dx, y: snake[0].y + dy };
+  // mover conejo
+  const head = {
+    x: snake[0].x + dx,
+    y: snake[0].y + dy
+  };
   snake.unshift(head);
 
-  // Comer comida
+  // comer zanahoria
   if (head.x === food.x && head.y === food.y) {
     score++;
     scoreEl.textContent = score;
-   food = {
-  x: Math.floor(Math.random() * (canvas.width / 10)) * 10,
-  y: Math.floor(Math.random() * (canvas.height / 10)) * 10
-};
-
-// Asegurar que no se salga del canvas
-if (food.x > canvas.width - 30) {
-  food.x = canvas.width - 30;
-}
-if (food.y > canvas.height - 30) {
-  food.y = canvas.height - 30;
-}
-
+    spawnFood();
   } else {
     snake.pop();
   }
 
-  
-  // Dibujar comida
-ctx.drawImage(carrotImg, food.x, food.y, 30, 30);
+  // dibujar zanahoria
+  ctx.drawImage(carrotImg, food.x, food.y, SIZE, SIZE);
 
-  // Dibujar serpiente
-snake.forEach(part => {
-  ctx.drawImage(bunnyImg, part.x, part.y, 30, 30);
-});
-  // Colisiones
+  // dibujar conejo
+  snake.forEach(part => {
+    ctx.drawImage(bunnyImg, part.x, part.y, SIZE, SIZE);
+  });
+
+  // colisiones (límite REAL del canvas)
   if (
-  head.x < 0 ||
-  head.y < 0 ||
-  head.x > canvas.width ||
-  head.y > canvas.height||
-  snake.slice(1).some(p => p.x === head.x && p.y === head.y)
+    head.x < 0 ||
+    head.y < 0 ||
+    head.x > canvas.width - SIZE ||
+    head.y > canvas.height - SIZE ||
+    snake.slice(1).some(p => p.x === head.x && p.y === head.y)
   ) {
     alert("Game Over");
     snake = [{ x: 150, y: 150 }];
-    dx = 10;
+    dx = STEP;
     dy = 0;
     score = 0;
     scoreEl.textContent = score;
+    spawnFood();
   }
 }
 
 document.addEventListener("keydown", e => {
-  if (e.key === "ArrowUp") changeDirection(0, -10);
-  if (e.key === "ArrowDown") changeDirection(0, 10);
-  if (e.key === "ArrowLeft") changeDirection(-10, 0);
-  if (e.key === "ArrowRight") changeDirection(10, 0);
+  if (e.key === "ArrowUp") changeDirection(0, -STEP);
+  if (e.key === "ArrowDown") changeDirection(0, STEP);
+  if (e.key === "ArrowLeft") changeDirection(-STEP, 0);
+  if (e.key === "ArrowRight") changeDirection(STEP, 0);
 });
-
 
 function directionbutton(id, x, y) {
   const btn = document.getElementById(id);
   if (!btn) return;
-
-  btn.addEventListener("click", () => {
-    changeDirection(x, y);
-  });
-  drawBounds();
-
+  btn.addEventListener("click", () => changeDirection(x, y));
 }
 
+directionbutton("up", 0, -STEP);
+directionbutton("down", 0, STEP);
+directionbutton("left", -STEP, 0);
+directionbutton("right", STEP, 0);
 
-directionbutton("up", 0,-10);
-directionbutton("down",0,10);
-directionbutton("left",-10,0);
-directionbutton("right",10,0);
-
-
+// iniciar juego
+spawnFood();
 setInterval(draw, 100);

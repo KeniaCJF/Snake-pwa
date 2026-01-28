@@ -26,8 +26,6 @@
 }
 
 #game {
-  width: 500px;
-  height: 500px;
   display: block;
   margin: auto;
 }
@@ -48,4 +46,10 @@
   #left  { grid-area: left; }
   #down  { grid-area: down; }
   #right { grid-area: right; }
+
+  #game {
+  max-width: 100%;
+  height: auto;
+}
+
 }
