@@ -58,8 +58,8 @@ snake.forEach(part => {
   if (
   head.x < 0 ||
   head.y < 0 ||
-  head.x > canvas.width - 30 ||
-  head.y > canvas.height - 30 ||
+  head.x > canvas.width ||
+  head.y > canvas.height||
   snake.slice(1).some(p => p.x === head.x && p.y === head.y)
   ) {
     alert("Game Over");
