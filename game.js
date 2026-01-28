@@ -17,6 +17,12 @@ function changeDirection(x,y){
 dx = x;
 dy = y;
 }
+function drawBounds() {
+  ctx.strokeStyle = "black";
+  ctx.lineWidth = 2;
+  ctx.strokeRect(0, 0, canvas.width - 30, canvas.height - 30);
+}
+
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -58,8 +64,8 @@ snake.forEach(part => {
   if (
   head.x < 0 ||
   head.y < 0 ||
-  head.x > canvas.width -10||
-  head.y > canvas.height -10||
+  head.x > canvas.width ||
+  head.y > canvas.height||
   snake.slice(1).some(p => p.x === head.x && p.y === head.y)
   ) {
     alert("Game Over");
@@ -86,6 +92,8 @@ function directionbutton(id, x, y) {
   btn.addEventListener("click", () => {
     changeDirection(x, y);
   });
+  drawBounds();
+
 }
 
 
