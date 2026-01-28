@@ -20,13 +20,6 @@ dy = y;
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // Dibujar comida
-ctx.drawImage(carrotImg, food.x, food.y, 20, 20);
-
-  // Dibujar serpiente
-snake.forEach(part => {
-  ctx.drawImage(bunnyImg, part.x, part.y, 30, 30);
-});
 
   // Mover serpiente
   const head = { x: snake[0].x + dx, y: snake[0].y + dy };
@@ -36,14 +29,31 @@ snake.forEach(part => {
   if (head.x === food.x && head.y === food.y) {
     score++;
     scoreEl.textContent = score;
-    food = {
-      x: Math.floor(Math.random() * 30) * 10,
-      y: Math.floor(Math.random() * 30) * 10
-    };
+   food = {
+  x: Math.floor(Math.random() * (canvas.width / 10)) * 10,
+  y: Math.floor(Math.random() * (canvas.height / 10)) * 10
+};
+
+// Asegurar que no se salga del canvas
+if (food.x > canvas.width - 30) {
+  food.x = canvas.width - 30;
+}
+if (food.y > canvas.height - 30) {
+  food.y = canvas.height - 30;
+}
+
   } else {
     snake.pop();
   }
 
+  
+  // Dibujar comida
+ctx.drawImage(carrotImg, food.x, food.y, 30, 30);
+
+  // Dibujar serpiente
+snake.forEach(part => {
+  ctx.drawImage(bunnyImg, part.x, part.y, 30, 30);
+});
   // Colisiones
   if (
     head.x < 0 || head.y < 0 ||

@@ -49,4 +49,9 @@
   #right {
     grid-area: right;
   }
+
+  .game{
+    width:500px,
+    height:500px
+  }
 }
