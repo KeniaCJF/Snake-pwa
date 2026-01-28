@@ -20,14 +20,19 @@
   transform: translateY(2px);
 }
 
-.background{ background-image:url(images/Grass.jpg); background-size: 100% 100%; }
+.background {
+  background-image: url(images/Grass.jpg);
+  background-size: 100% 100%;
+}
 
 #game {
   width: 500px;
   height: 500px;
+  display: block;
+  margin: auto;
 }
 
-/* Layout tipo control de consola */
+/* Controles solo en móvil */
 @media (max-width: 800px) {
   .game_buttons {
     display: grid;
@@ -39,25 +44,8 @@
     justify-content: center;
   }
 
-  #up {
-    grid-area: up;
-  }
-
-  #left {
-    grid-area: left;
-  }
-
-  #down {
-    grid-area: down;
-  }
-
-  #right {
-    grid-area: right;
-  }
-
-#game {
-  width: 500px;
-  height: 500px;
-}
-
+  #up    { grid-area: up; }
+  #left  { grid-area: left; }
+  #down  { grid-area: down; }
+  #right { grid-area: right; }
 }
