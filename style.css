@@ -20,7 +20,7 @@
   transform: translateY(2px);
 }
 
-.background{ background-image:url(images/Grass.jpg); background-size: cover; }
+.background{ background-image:url(images/Grass.jpg); background-size: 100% 100%; }
 
 #game {
   width: 500px;
